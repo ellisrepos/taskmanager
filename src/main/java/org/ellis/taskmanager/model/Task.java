@@ -3,8 +3,6 @@ package org.ellis.taskmanager.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-
 @Getter
 @Setter
 public class Task {
@@ -12,10 +10,9 @@ public class Task {
     private String description;
     private Long id;
     private Status status;
-    public Task(String title, String description, Long id) {
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.id = id;
         this.status = Status.OPEN;
     }
 }
