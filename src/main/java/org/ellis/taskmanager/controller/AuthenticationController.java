@@ -19,4 +19,9 @@ public class AuthenticationController {
     public User register(@RequestParam String email, @RequestParam String password) {
         return authenticationService.register(email, password);
     }
-}
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password) {
+        return authenticationService.login(email, password);
+    }
+
+    }
