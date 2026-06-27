@@ -5,17 +5,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
 @Table(name = "tasks")
 @NoArgsConstructor
-public class Task {
+public class Task implements Serializable {
     private String title;
     private String description;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private static final Long serialVersionUID = 1L;
     @Enumerated(EnumType.STRING)
     private Status status;
     public Task(String title, String description) {
