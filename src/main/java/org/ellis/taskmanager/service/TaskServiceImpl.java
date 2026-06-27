@@ -1,5 +1,7 @@
 package org.ellis.taskmanager.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import lombok.extern.slf4j.Slf4j;
 import org.ellis.taskmanager.model.Task;
 import org.ellis.taskmanager.repository.TaskRepository;
@@ -16,6 +18,7 @@ public class TaskServiceImpl implements TaskService {
         this.taskRepository = taskRepository;
     }
 
+    @CacheEvict(value = "tasks", allEntries = true)
     @Override
     public Task createTask(String title, String description) {
         if (title == null || title.isBlank()) {
@@ -30,16 +33,19 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.findById(id);
     }
 
+    @Cacheable("tasks")
     @Override
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
 
+    @CacheEvict(value = "tasks", allEntries = true)
     @Override
     public void deleteTask(Long id) {
         taskRepository.deleteById(id);
     }
 
+    @CacheEvict(value = "tasks", allEntries = true)
     @Override
     public Task updateTask(Long id, String title, String description) {
         Task task = taskRepository.findById(id)
