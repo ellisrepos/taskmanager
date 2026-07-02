@@ -81,7 +81,7 @@ public class JwtServiceImpl implements JwtService{
              Compare signatures
   1. Uses your secret signing key.
   2. Computes a new HMAC-SHA256 signature from the received header and payload.
-  3. Compares it with the signature that came inside the JWT.
+  3. Compares it with the signature that is inside JWT.
     */
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes());
