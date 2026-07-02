@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.ellis.taskmanager.model.User;
 import org.ellis.taskmanager.repository.UserRepository;
 import org.ellis.taskmanager.service.JwtService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -36,6 +38,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         System.out.println("Email" + email);
         User user = userRepository.findByEmail(email).orElse(null);
         System.out.println("User" + user);
+        if (user != null && jwtService.isTokenValid(jwt, user)) {
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null, null);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
         filterChain.doFilter(request, response);
     }
 
