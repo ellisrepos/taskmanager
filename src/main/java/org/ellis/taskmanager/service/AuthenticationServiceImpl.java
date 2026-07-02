@@ -19,6 +19,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User register(String email, String password) {
         String hashedPassword = passwordEncoder.encode(password);
         User newUser = new User(email, hashedPassword);
+        if (userRepository.findByEmail(email).isPresent()) {
+            throw new IllegalArgumentException("Email already in use");
+        }
         return userRepository.save(newUser);
     }
 

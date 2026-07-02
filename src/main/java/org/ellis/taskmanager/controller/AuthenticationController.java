@@ -1,5 +1,6 @@
 package org.ellis.taskmanager.controller;
 
+import org.ellis.taskmanager.dto.UserResponse;
 import org.ellis.taskmanager.model.User;
 import org.ellis.taskmanager.service.AuthenticationService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,8 +17,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestParam String email, @RequestParam String password) {
-        return authenticationService.register(email, password);
+    public UserResponse register(@RequestParam String email, @RequestParam String password) {
+        User user = authenticationService.register(email, password);
+        return new UserResponse(user.getId(), user.getEmail());
     }
     @PostMapping("/login")
     public String login(@RequestParam String email, @RequestParam String password) {
